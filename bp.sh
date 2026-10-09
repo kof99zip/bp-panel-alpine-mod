@@ -23,6 +23,8 @@ ROOT="${PANEL_ROOT:-/opt/browser-panel}"
 SERVICE="${SERVICE_NAME:-browser-automation-panel}"
 XVFB_SERVICE="${XVFB_SERVICE:-xvfb-browser}"
 BROWSER_USER="${BROWSER_USER:-browser}"
+BROWSER_HOME="${BROWSER_HOME:-/home/$BROWSER_USER}"
+BROWSER_WORK="${BROWSER_WORK_DIR:-$BROWSER_HOME/browser-work}"
 
 log() {
     echo "[bp-alpine] $*"
@@ -268,19 +270,19 @@ install_deps() {
 prepare_runtime() {
     if ! id "$BROWSER_USER" >/dev/null 2>&1; then
         log "creating user $BROWSER_USER"
-        adduser -D -h "/home/$BROWSER_USER" -s /bin/bash "$BROWSER_USER"
+        adduser -D -h "$BROWSER_HOME" -s /bin/bash "$BROWSER_USER"
     fi
 
     mkdir -p \
-        "/home/$BROWSER_USER" \
-        "/home/$BROWSER_USER/browser-work" \
+        "$BROWSER_HOME" \
+        "$BROWSER_WORK" \
         "$ROOT/data" \
         "$ROOT/logs" \
         "$ROOT/screenshots" \
         "$ROOT/runtime-data"
 
     chown -R "$BROWSER_USER:$BROWSER_USER" \
-        "/home/$BROWSER_USER" 2>/dev/null || true
+        "$BROWSER_HOME" 2>/dev/null || true
 }
 
 # ---------------------------------------------------------------------------
@@ -351,8 +353,8 @@ pidfile="/run/$SERVICE.pid"
 export PORT="3210"
 export BROWSER_DISPLAY=":1.0"
 export BROWSER_USER="$BROWSER_USER"
-export BROWSER_HOME="/home/$BROWSER_USER"
-export BROWSER_WORK_DIR="/home/$BROWSER_USER/browser-work"
+export BROWSER_HOME="${BROWSER_HOME:-/home/$BROWSER_USER}"
+export BROWSER_WORK_DIR="${BROWSER_WORK_DIR:-$BROWSER_HOME/browser-work}"
 
 depend() {
     need net

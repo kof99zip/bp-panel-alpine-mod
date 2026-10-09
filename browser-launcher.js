@@ -224,7 +224,7 @@ function collectModuleCopyPairs(entryModules, workerNodeModules) {
 function getBrowserWorkDir() {
   return (config.browser && config.browser.workDir)
     ? String(config.browser.workDir)
-    : path.join('/home', config.browser.user || 'browser', 'browser-work');
+    : path.join(process.env.BROWSER_HOME || path.join('/home', config.browser.user || 'browser'), 'browser-work');
 }
 
 function ensureRuntimeFiles(task) {
