@@ -113,15 +113,15 @@ export BROWSER_USER=root
 export BROWSER_HOME=/root
 export BROWSER_WORK_DIR=/home/container/bw
 
-bash <(curl -Ls 'https://raw.githubusercontent.com/<用户名>/<新仓库>/main/ins.sh') && \
-bash <(curl -Ls 'https://raw.githubusercontent.com/<用户名>/<新仓库>/main/bp.sh') && \
+bash <(curl -Ls 'https://raw.githubusercontent.com/kof99zip/bp-panel-alpine-mod/main/ins.sh') && \
+bash <(curl -Ls 'https://raw.githubusercontent.com/kof99zip/bp-panel-alpine-mod/main/bp.sh') && \
 (pkill -f 'node server/index.js' 2>/dev/null || true)
 
 mkdir -p /opt/browser-panel/server/runtime
-curl -fLs "https://raw.githubusercontent.com/<用户名>/<新仓库>/main/browser-launcher.js" \
+curl -fLs "https://raw.githubusercontent.com/kof99zip/bp-panel-alpine-mod/main/browser-launcher.js" \
   -o /opt/browser-panel/server/runtime/browser-launcher.js
 
-curl -fLs "https://raw.githubusercontent.com/<用户名>/<新仓库>/main/panel-start.sh" \
+curl -fLs "https://raw.githubusercontent.com/kof99zip/bp-panel-alpine-mod/main/panel-start.sh" \
   -o /root/panel-start.sh && chmod +x /root/panel-start.sh
 ```
 
